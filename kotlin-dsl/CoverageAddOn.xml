@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2000-2022 JetBrains s.r.o.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<dsl-add-on kind="buildStep">
+  <extends>
+    <dsl type="dotnet" applicable="params['command'] == 'msbuild'" />
+    <dsl type="dotnet" applicable="params['command'] == 'test'" />
+    <dsl type="dotnet" applicable="params['command'] == 'vstest'" />
+    <dsl type="dotnet" applicable="params['command'] == 'custom'" />
+    <dsl type="dotnet" applicable="params['command'] == 'devenv'" />
+  </extends>
+  <params>
+    <param name="dotNetCoverage.tool" dslName="coverage" type="compound">
+      <description>
+        Specifies coverage tool to use
+      </description>
+      <option name="dotcover" value="dotcover">
+        <param name="dotNetCoverage.dotCover.home.path" dslName="toolPath">
+          <description>Specify the path to dotCover CLT.</description>
+        </param>
+        <param name="dotNetCoverage.dotCover.filters" dslName="assemblyFilters">
+          <description>Specify a new-line separated list of filters for code coverage.</description>
+        </param>
+        <param name="dotNetCoverage.dotCover.attributeFilters" dslName="attributeFilters">
+          <description>
+            Specify a new-line separated list of attribute filters for code coverage.
+            Supported only with dotCover 2.0 or later.
+          </description>
+        </param>
+        <param name="dotNetCoverage.dotCover.customCmd" dslName="args">
+          <description>
+            Enter additional new-line separated command line parameters for dotCover.
+          </description>
+        </param>
+      </option>
+    </param>
+  </params>
+</dsl-add-on>

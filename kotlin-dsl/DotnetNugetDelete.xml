@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2000-2022 JetBrains s.r.o.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<dsl-extension kind="buildStep" type="dotnet" generateDslJar="true" applicable="params['command'] == 'nuget-delete'">
+    <class name="DotnetNugetDeleteStep">
+        <description>
+            A [dotnet nuget delete step](https://github.com/JetBrains/teamcity-dotnet-plugin) to run .NET CLI command
+        </description>
+    </class>
+    <function name="dotnetNugetDelete">
+        <description>
+            Adds a [dotnet nuget delete step](https://github.com/JetBrains/teamcity-dotnet-plugin) to run .NET CLI command
+            @see DotnetNugetDeleteStep
+        </description>
+    </function>
+    <init>
+        <param name="command" value="nuget-delete"/>
+    </init>
+    <params>
+        <param name="nuget.packageSource" dslName="serverUrl" mandatory="true">
+            <description>Specify the server URL.</description>
+        </param>
+        <param name="nuget.packageId" dslName="packageId" mandatory="true">
+            <description>Specify the package name and version separated by a space.</description>
+        </param>
+        <param name="secure:nuget.apiKey" dslName="apiKey" mandatory="true">
+            <description>Specify the API key to access the NuGet packages feed.</description>
+        </param>
+        <param name="args">
+            <description>Enter additional command line parameters for dotnet nuget delete.</description>
+        </param>
+        <param name="verbosity" dslName="logging" type="Verbosity">
+            <description>
+                Specify logging verbosity
+                @see Verbosity
+            </description>
+        </param>
+        <param name="required.sdk" dslName="sdk">
+            <description>.NET SDK versions separated by semicolon to be required on agents.</description>
+        </param>
+    </params>
+    <types>
+        <enum name="Verbosity">
+            <description>
+                Logging verbosity
+            </description>
+            <option name="Quiet" value="Quiet"/>
+            <option name="Minimal" value="Minimal"/>
+            <option name="Normal" value="Normal"/>
+            <option name="Detailed" value="Detailed"/>
+            <option name="Diagnostic" value="Diagnostic"/>
+        </enum>
+    </types>
+</dsl-extension>

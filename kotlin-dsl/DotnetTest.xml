@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2000-2022 JetBrains s.r.o.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<dsl-extension kind="buildStep" type="dotnet" generateDslJar="true" applicable="params['command'] == 'test'">
+    <class name="DotnetTestStep">
+        <description>
+            A [dotnet test step](https://github.com/JetBrains/teamcity-dotnet-plugin) to run .NET CLI command
+        </description>
+    </class>
+    <function name="dotnetTest">
+        <description>
+            Adds a [dotnet test step](https://github.com/JetBrains/teamcity-dotnet-plugin) to run .NET CLI command
+            @see DotnetTestStep
+        </description>
+    </function>
+    <init>
+        <param name="command" value="test"/>
+    </init>
+    <params>
+        <param name="paths" dslName="projects">
+            <description>Specify paths to projects and solutions. Wildcards are supported.</description>
+        </param>
+        <param name="teamcity.build.workingDir" dslName="workingDir">
+            <description>
+                [Build working directory](https://www.jetbrains.com/help/teamcity/?Build+Working+Directory) for
+                script,
+                specify it if it is different from the [checkout
+                directory](https://www.jetbrains.com/help/teamcity/?Build+Checkout+Directory).
+            </description>
+        </param>
+        <param name="test.testCaseFilter" dslName="filter">
+            <description>Specify the test case filter.</description>
+        </param>
+        <param name="framework">
+            <description>Target framework to test for.</description>
+        </param>
+        <param name="configuration">
+            <description>Target configuration to test for.</description>
+        </param>
+        <param name="outputDir">
+            <description>The directory where to find the binaries to be run.</description>
+        </param>
+        <param name="skipBuild" type="boolean" trueValue="true" falseValue="">
+            <description>Do not build the project before testing</description>
+        </param>
+        <param name="singleSession" dslName="singleSession" type="boolean" trueValue="true" falseValue="">
+            <description>
+                Whether TeamCity should run tests in a single session
+            </description>
+        </param>
+        <param name="test.settingsFile" dslName="settingsFile">
+            <description>Run tests that match the given expression.</description>
+        </param>
+        <param name="args">
+            <description>Enter additional command line parameters for dotnet test.</description>
+        </param>
+        <param name="verbosity" dslName="logging" type="Verbosity">
+            <description>
+                Specify logging verbosity
+                @see Verbosity
+            </description>
+        </param>
+        <param name="required.sdk" dslName="sdk">
+            <description>.NET SDK versions separated by semicolon to be required on agents.</description>
+        </param>
+    </params>
+    <types>
+        <enum name="Verbosity">
+            <description>
+                Logging verbosity
+            </description>
+            <option name="Quiet" value="Quiet"/>
+            <option name="Minimal" value="Minimal"/>
+            <option name="Normal" value="Normal"/>
+            <option name="Detailed" value="Detailed"/>
+            <option name="Diagnostic" value="Diagnostic"/>
+        </enum>
+    </types>
+</dsl-extension>
